@@ -1,0 +1,1183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/static/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <title>Document</title>
+    <style>
+        .spec-img {
+            height: 50px;
+            width: 50px;
+        }
+
+        #corex,
+        #corey,
+        #corez {
+            display: none;
+        }
+
+        #submit_div {
+            margin: auto;
+            width: max-content;
+        }
+
+
+        #inventory {
+            display: grid;
+            grid-template-columns: 255px 255px 255px 255px 255px;
+            justify-content: center;
+            height: 270px;
+            overflow-y: scroll;
+            margin-top: 10px;
+
+        }
+
+
+        #ttable th,
+        #ttable td,
+        #ttable {
+            border: 2px solid #50ff00;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        #ttable th,
+        #ttable td {
+      
+            width: 4vw;
+
+
+        }
+
+        #ttable td {
+            font-family: cursive;
+            max-width: 2vw;
+            overflow: scroll;
+            text-overflow: ellipsis;
+
+
+        }
+
+        #ttable {
+            margin: auto;
+        }
+
+
+        .inventory-elements {
+            font-size: 25px;
+            margin: 4px;
+            border: 7px solid;
+            border-radius: 8px;
+            font-family: cursive;
+            padding: 5px;
+            cursor: move
+        }
+
+        .sub {
+
+            font-weight: bold;
+        }
+
+        #week_links {
+            display: flex;
+            margin: 10px;
+            margin-top: 15px;
+            justify-content: space-evenly;
+
+        }
+
+        #week_links span,
+        #week_links a {
+            cursor: pointer;
+            font-family: cursive;
+            font-size: 25px;
+        }
+
+        #week_links a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<header ondragstart="return false">
+    <a href="/"><img id="logo-img" src="/static/logox.png" alt="logo-icon"></a>
+    <div id="search-div">
+        <input id="search-box" autocomplete="off" type="text">
+        <img id="search-logo" src="/static/search_icon.png" alt="search_icon">
+    </div> <!--hidden for students-->
+    <a class="header-links" href="/">Home</a>
+    <a class="header-links" href="/xlogout">Logout</a>
+    <div id="profile">
+        <img id="profile-icon" src="/static/profile_icon.webp" alt="profile">
+        <div id="username">{{ data.name }}</div>
+        <img id="drop-icon" src="/static/drop_arrow_icon.png" alt="drop_icon">
+    </div>
+
+</header>
+<body>
+    <div>
+
+    </div>
+    <div id="week_links">
+        <a href="/home/coordinator/timetable/regular/">Semester</a>
+        <span onclick="update_date_click()" class="week">Monday</span>
+        <span onclick="update_date_click()" class="week">Tuesday</span>
+        <span onclick="update_date_click()" class="week">Wednesday</span>
+        <span onclick="update_date_click()" class="week">Thursday</span>
+        <span onclick="update_date_click()" class="week">Friday</span>
+        <span onclick="update_date_click()" class="week">Saturday</span>
+    </div>
+    <div id="tt">
+        <table id="ttable">
+            <thead>
+                <tr> <!--mention capacity-->
+                    <th>Room</th>
+                    <th>203</th>
+                    <th>207</th>
+                    <th>301</th>
+                    <th>303</th>
+                    <th>304</th>
+                    <th>305</th>
+                    <th>306</th>
+                    <th>307</th>
+                    <th>401</th>
+                    <th>402</th>
+                    <th>404</th>
+                    <th>405</th>
+                    <th>406</th>
+                    <th>407</th>
+                    <th>701</th>
+                    <th>702</th>
+                    <th>703</th>
+                    <th>704</th>
+                    <th>705</th>
+                    <th>706</th>
+                    <th>707</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  class="out_time">
+                    <th>07:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>08:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>08:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>09:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>09:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>10:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>10:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>11:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>11:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>12:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="out_time">
+                    <th>12:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="out_time">
+                    <th>13:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="out_time">
+                    <th>13:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>14:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>14:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>15:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="out_time">
+                    <th>15:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>16:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>16:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>17:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>17:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>18:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>18:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>19:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>19:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="out_time">
+                    <th>20:00</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="out_time">
+                    <th>20:30</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <form action="/home/coordinator/timetable/semester/save/" method="post">
+        {% csrf_token %}
+        <input name="corex" id="corex" type="text">
+        <input name="corey" id="corey" type="text">
+        <input name="corez" id="corez" type="text">
+
+        <div id="submit_div">
+
+            <img class="spec-img" draggable="false" src="/static/tick.png" onclick="send()" alt="Submit">
+            <a draggable="false" href="/"><img draggable="false" class="spec-img" src="/static/cancel.png"
+                    alt="cancel"></a>
+            <img class="spec-img" ondragstart="myonDragStart(event)" src="/static/eraser.jpg" alt="Eraser">
+        </div>
+    </form>
+    <div id="inventory">
+
+        {% for x in time_table %}
+        <div draggable="true" ondragstart="myonDragStart(event)" class="inventory-elements">
+            <div class="find">
+                <span class="sub">{{ x.sub_name }}</span><br>
+                Course: {{ x.sem_course }}<br>
+            </div>
+            <span class="yy">Remaining: <span class="zz">{{ x.credit }}</span></span><br>
+            Div: {{ x.div_group }}
+        </div>
+        {% endfor %}
+    </div>
+</body><script src="/static/js/header.js"></script>
+<script>
+    let week_days = ['Monday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    let day_name = week_days[new Date().getDay()];
+    let find_week = document.getElementsByClassName("week")
+
+    let findg = document.getElementsByClassName("find")
+    let findg_array = []
+    let color_array = []
+
+
+
+    Array.prototype.count = function (item) {   //Wow!!!!!!!!!!!!!!!
+        let appearance = 0;
+        this.forEach(index => {
+            if (index === item)
+                appearance++
+        });
+        return appearance;
+    }
+
+    function another() {
+        let real_str = [];
+        "{% for y in real_time_table %}"
+        real_str.push("{{ y.subject_reference.sub_name }}" + " Course: " + "{{ y.subject_reference.sem_course.course.c_name }}" + " " + "{{ y.subject_reference.sem_course.course.batch }}" + " Sem: " + "{{ y.subject_reference.sem_course.sem }}" + " Remaining: " + "{{ y.subject_reference.credit }}" + " Div: " + "{{ y.subject_reference.div_group }}")
+        "{% endfor %}"
+
+        for (let i = 0; i < findg.length; i++) {
+            let temp = findg[i].textContent.trim()
+            let xx = findg[i].parentElement.textContent.split(`\n`);
+            let tempr = xx[2].trim() + " " + xx[3].trim() + " " + xx[5].trim() + " " + xx[6].trim();
+            for (let j = 0; j < real_str.length; j++) {
+                if (tempr == real_str[j]) {
+
+                    let tempp = findg[i].parentElement.querySelector(".zz");
+                    tempp.textContent = tempp.textContent - real_str.count(real_str[j]);
+                    if (tempp.textContent < 1) {
+                        findg[i].parentElement.removeAttribute("draggable");
+                    }
+                    break;
+                }
+            }
+
+            if (findg_array.includes(temp) == false) {
+                findg_array.push(temp)
+            }
+        }
+    }
+    another();
+
+    while (color_array.length < findg_array.length + 1) {
+        let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        if ((color_array.includes(randomColor) == false) && (randomColor.length == 7)) {  //pls remove dark colors
+            color_array.push(randomColor)
+        }
+    }
+    for (let i = 0; i < findg.length; i++) {
+        let temp = findg[i].textContent.trim()
+        for (let ii = 0; ii < findg_array.length; ii++) {
+            if (temp == findg_array[ii]) {
+                let temp2 = findg[i].parentElement.style;
+                temp2.backgroundColor = color_array[ii]
+                temp2.borderColor = color_array[ii + 1]
+
+
+            }
+        }
+
+    }
+    //drag an drop
+    let table_td = document.querySelector('#ttable').querySelectorAll("td")
+
+    for (let i = 0; i < table_td.length; i++) {
+        let temp = table_td[i]
+        if (temp.parentElement.className != "out_time") {
+            temp.setAttribute('ondragover', 'mydragover(event)')
+            temp.setAttribute('ondragleave', 'mydragleave(event)')
+            temp.setAttribute('ondrop', 'mydrop(event)')
+        }
+
+    }
+
+    let data_temp;
+    let data_temp_colour;
+    let current_event_inventory;
+    function myonDragStart(event) {
+
+        current_event_inventory = event.currentTarget;
+        data_temp = current_event_inventory.textContent;
+        data_temp_colour = current_event_inventory.style.backgroundColor;
+
+    }
+    function mydragover(event) {
+        event.preventDefault()
+        event.currentTarget.style.borderColor = "orange";
+        event.currentTarget.parentElement.cells[0].style.backgroundColor = "yellow";
+        mytable.rows[0].cells[event.currentTarget.cellIndex].style.backgroundColor = "yellow";
+
+    }
+    function mydragleave(event) {
+        event.currentTarget.style.borderColor = "";
+        event.currentTarget.parentElement.cells[0].style.backgroundColor = "";
+        mytable.rows[0].cells[event.currentTarget.cellIndex].style.backgroundColor = "";
+    }
+    let mytable = document.getElementById("ttable")
+    let x;
+
+    function mydrop(event) {
+        if (current_event_inventory.className != "spec-img") {
+            data_temp = data_temp.replace(current_event_inventory.querySelector(".yy").textContent, "")
+            let temp = current_event_inventory.querySelector(".zz");
+            let cred = temp.textContent - 1;
+            current_event_inventory.querySelector(".zz").textContent = cred;
+            event.currentTarget.textContent = data_temp;
+            event.currentTarget.style.backgroundColor = data_temp_colour;
+            event.currentTarget.className = "new";
+
+            x = mytable.rows[event.currentTarget.parentElement.rowIndex + 1].cells[1]
+            x.remove()
+
+
+            event.currentTarget.rowSpan = "2";
+            event.currentTarget.style.borderColor = "";
+            mytable.rows[0].cells[event.currentTarget.cellIndex].style.backgroundColor = "";
+            event.currentTarget.parentElement.cells[0].style.backgroundColor = "";
+
+            if (cred < 1) {
+                current_event_inventory.removeAttribute("draggable"); //no handled when overrwriting
+            }
+            data_temp = "";
+            current_event_inventory = "";
+            event.currentTarget.style.fontFamily = "cursive";
+        }
+        else {
+            let tempy = event.currentTarget;
+            if (tempy.textContent != "") {
+
+                
+                for (let f = 0; f < findg.length; f++) {
+                    let xx = findg[f].parentElement.textContent.split(`\n`);
+                    let tempr = xx[2].trim() + " " + xx[3].trim() + " " + xx[6].trim();
+  
+                    let tempp = tempy.textContent;
+                    let tempp_arr = tempp.split("\n");
+                    if(tempp_arr.length != 1){
+                        tempp = tempp_arr[2].trim() + " " + tempp_arr[3].trim() + " " + tempp_arr[6].trim()
+                    }
+
+                    if (tempr == tempp) {
+                        
+                        let temp = findg[f].parentElement.querySelector(".zz");
+                        temp.textContent = Number.parseInt(temp.textContent) + 1;
+                        break;
+                    }
+                }
+    
+                tempy.className = "removed";
+                tempy.textContent = "";
+                mytable.rows[tempy.parentElement.rowIndex + 1].cells[0].insertAdjacentHTML('afterend', '<td></td>')
+                tempy.rowSpan = "1";
+
+            }
+            event.currentTarget.style.borderColor = "";
+            event.currentTarget.style.backgroundColor = "";
+            mytable.rows[0].cells[event.currentTarget.cellIndex].style.backgroundColor = "";
+            event.currentTarget.parentElement.cells[0].style.backgroundColor = "";
+
+        }
+    }
+
+
+    function assign() {
+        let temp_Day;
+        let sub = [];
+        let start_time = [];
+        let end_time = [];
+        let room = [];
+        let c_name = [];
+        let batch = [];
+        let sem = [];
+        let div = [];
+        "{% for y in real_time_table %}"
+        temp_Day = "{{ y.day }}"
+        if (temp_Day == day_name) {
+            start_time.push("{{ y.start_time }}")
+            end_time.push("{{ y.end_time }}")
+            room.push("{{ y.room }}")
+            sub.push("{{ y.subject_reference.sub_name }}")
+            c_name.push("{{ y.subject_reference.sem_course.course.c_name }}")
+            batch.push("{{ y.subject_reference.sem_course.course.batch }}")
+            sem.push("{{ y.subject_reference.sem_course.sem }}")
+            div.push("{{ y.subject_reference.div_group }}")
+        }
+
+        "{% endfor %}"
+        for (let i = 0; i < table_td.length; i++) {
+            let tempy = table_td[i];
+            for (let j = 0; j < start_time.length; j++) {
+
+                try {
+                    if (tempy.parentElement.cells[0].textContent == start_time[j] && tempy.parentElement.nextElementSibling.nextElementSibling.cells[0].textContent == end_time[j] && mytable.rows[0].cells[tempy.cellIndex].textContent == room[j]) {
+                        tempy.class = "old";
+                        tempy.textContent = sub[j] + " Course: " + c_name[j] + " " + batch[j] + " Sem: " + sem[j] + " Div: " + div[j]
+                        x = mytable.rows[tempy.parentElement.rowIndex + 1].cells[1]
+                        x.remove()
+                        tempy.rowSpan = "2";
+                        //
+                        for (let ii = 0; ii < findg.length; ii++) {
+
+                            let tempo = findg[ii].textContent.trim().split(`\n`)
+                            let temp = tempo[0] + " " + tempo[1].trim()
+
+                            let zz = tempy.textContent.trim()
+                            if (zz.slice(-4, -1) == 'Non') {
+                                zz = tempy.textContent.trim().slice(0, -10)
+                            }
+                            else if (zz.slice(-4, -3) == 'v') {
+                                zz = tempy.textContent.trim().slice(0, -7)
+                            }
+                            else {
+                                zz = tempy.textContent.trim().slice(0, -13)
+                            }
+
+                            if (temp == zz) {
+                                tempy.style.backgroundColor = findg[ii].parentElement.style.backgroundColor;
+                                break;
+
+
+                            }
+
+
+                        }
+
+                        start_time.splice(j, 1);
+                        end_time.splice(j, 1);
+                        room.splice(j, 1);
+                        sub.splice(j, 1)
+                        c_name.splice(j, 1)
+                        batch.splice(j, 1)
+                        sem.splice(j, 1)
+                        div.splice(j, 1)
+
+                        break;
+                    }
+
+                }
+                catch (e) {
+                    break;
+                }
+
+            }
+
+
+        }
+
+    }
+
+    function clean_td() {
+        for (let i = 0; i < table_td.length; i++) {
+            let tempy = table_td[i];
+            tempy.textContent = "";
+            tempy.class = "";
+            tempy.style.backgroundColor = "";
+            if (tempy.rowSpan == 2) {
+                mytable.rows[tempy.parentElement.rowIndex + 1].cells[1].insertAdjacentHTML('afterend', '<td></td>')
+                tempy.rowSpan = "1";
+            }
+
+        }
+    }
+    function update_date_click() {
+        try {
+            day_name = event.target.textContent;
+        }
+        catch (e) {
+
+        }
+        for (let i = 0; i < find_week.length; i++) {
+            find_week[i].style.backgroundColor = "";
+            find_week[i].style.borderSize = "";
+            find_week[i].style.borderColor = "";
+            find_week[i].style.borderStyle = "";
+            find_week[i].style.borderRadius = "";
+            find_week[i].style.padding = "";
+            if (find_week[i].textContent == day_name) {
+                day_name = find_week[i].textContent;
+                find_week[i].style.backgroundColor = "orange";
+                find_week[i].style.borderSize = "2px";
+                find_week[i].style.borderColor = "black";
+                find_week[i].style.borderStyle = "solid";
+                find_week[i].style.borderRadius = "4px";
+                find_week[i].style.padding = "2px";
+
+
+            }
+        }
+        clean_td()
+        assign()
+
+    }
+    update_date_click()
+    function send() {
+        let elementx = document.getElementById("corex");
+        let elementy = document.getElementById("corey");
+        let elementz = document.getElementById("corez");
+        let erased_data = "";
+        let core = "";
+        for (let i = 0; i < table_td.length; i++) {
+            let temp = table_td[i];
+            if (temp.className == "removed") {
+                erased_data = erased_data + temp.parentElement.cells[0].textContent + ":)" + temp.parentElement.nextElementSibling.nextElementSibling.cells[0].textContent + ":)" + mytable.rows[0].cells[temp.cellIndex].textContent + ":$:"
+            }
+
+
+            if (temp.textContent != "" && temp.className == "new") {
+                let processed_String = "";
+                let processing_String = temp.textContent.split(`\n`);
+
+                for (let j = 0; j < processing_String.length; j++) {
+                    let temp = processing_String[j].trim()
+                    if (temp != "") {
+                        processed_String = processed_String + temp + ":)";
+                    }
+                }
+                processed_String = processed_String.replace("Div: ", "").replace(" Sem: ", ":)").replace("Course: ", "")
+
+
+                core = core + processed_String + temp.parentElement.cells[0].textContent + ":)" + temp.parentElement.nextElementSibling.nextElementSibling.cells[0].textContent + ":)" + mytable.rows[0].cells[temp.cellIndex].textContent + ":$:";
+            }
+        }
+        elementx.value = core;
+        elementy.value = day_name;
+        elementz.value = erased_data;
+        core = "";
+        elementx.parentElement.submit()
+    }
+
+</script>
+
+</html>

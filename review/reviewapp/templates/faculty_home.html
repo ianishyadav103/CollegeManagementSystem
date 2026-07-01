@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <title>Student</title>
+    <style>
+        .white {
+            background-image: url("/static/home_back.webp");
+            background-attachment: fixed;
+            cursor: url('/static/new_cursor.png') 5 4, auto;
+
+
+
+
+        }
+
+        .black {
+            background-image: url("/static/home_back.png");
+            background-attachment: fixed;
+            cursor: url('/static/new_cursor_black.png') 5 4, auto;
+
+        }
+        #cont_black a {
+            color: aqua;
+            background-color: black;
+            box-shadow: 0px 0px 10px aqua;
+
+        }
+
+        .common_cont {
+            display: grid;
+            grid-template-columns: 240px 240px 240px;
+            justify-content: space-evenly;
+            row-gap: 25px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+
+
+        .common_cont a {
+            text-decoration: none;
+            font-size: 25px;
+            border: 2px solid grey;
+            border-radius: 10px;
+            text-align: center;
+            font-family: cursive;
+
+            height: 280px;
+        }
+
+        #cont a {
+
+
+            box-shadow: 15px 10px 15px #888888;
+            color: blue;
+
+            background-color: #80ffd4;
+
+
+
+        }
+
+        #cont img {
+            width: 95%;
+            height: 85%;
+            background-color: azure;
+        }
+
+        #cont_black img {
+            width: 95%;
+            height: 85%;
+            background-color: rgb(32, 28, 28);
+        }
+
+
+        
+
+        .common_cont a:hover {
+            scale: 1.05;
+        }
+
+
+        @media screen and (max-width: 1024px) {
+            .common_cont {
+                grid-template-columns: 260px 260px;
+
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .common_cont img {
+                width: 30vw;
+                height: 30vw;
+            }
+
+            .common_cont {
+                grid-template-columns: 35vw 35vw;
+
+            }
+
+            .common_cont a {
+
+                font-size: 4vw;
+                height: 38vw;
+            }
+
+
+        }
+
+        #theme-btn {
+            border: 2px solid rgb(255, 255, 255);
+            background-color: black;
+            color: white;
+            padding: 3px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: fixed;
+            top: 75px;
+            right: 5px;
+        }
+    </style>
+</head>
+<header ondragstart="return false">
+    <a href="/"><img id="logo-img" src="/static/logox.png" alt="logo-icon"></a>
+    <div id="search-div">
+        <input id="search-box" autocomplete="off" type="text">
+        <img id="search-logo" src="/static/search_icon.png" alt="search_icon">
+    </div> <!--hidden for students-->
+    <a class="header-links" href="/">Home</a>
+    <a class="header-links" href="/xlogout">Logout</a>
+    <div id="profile">
+        <img id="profile-icon" src="/static/profile_icon.webp" alt="profile">
+        <div id="username">{{ data.name }}</div>
+        <img id="drop-icon" src="/static/drop_arrow_icon.png" alt="drop_icon">
+    </div>
+
+</header>
+
+<body>
+    <button onclick="theme_change()" id="theme-btn">Dark</button>
+    <div class="common_cont">
+        <a href="attendance/">Attendance<img src="/static/attendance.png" alt=""></a>
+        <a href="timetable/">Time-Table<img src="/static/time_table.png" alt=""></a>
+        <a href="/course material">Course Material<img src="/static/study_material.png" alt=""></a>
+        <a href="/calendar">Calendar<img src="/static/calendar.png" alt=""></a>
+        <!-- <a href="blog/">Blogs<img src="/static/blog.png" alt=""></a> -->
+        <a href="/inquiry">Inquiry<img src="/static/inquiry.png" alt=""></a>
+        <a href="/complaint">Complaint<img src="/static/complaint.png" alt=""></a>
+    </div>
+    <script src="/static/js/header.js"></script>
+
+    <script>
+    
+        function change_theme_combine(n) {
+            let btn = document.getElementById("theme-btn")
+            let b = document.getElementsByClassName("common_cont")[0];
+            let by = document.getElementsByTagName("body")[0];
+            let hr = document.getElementsByTagName("header")[0];
+            let sb = document.getElementById("search-box").style;
+            if (n == '1') {
+                btn.textContent = "Dark";
+                btn.style.backgroundColor = "black";
+                btn.style.color = "white";
+                b.id = "cont";
+                by.className = "white"
+                theme = "white";
+                hr.style.backgroundColor = "#80ffd4";
+                hr.style.color = "black";
+                document.getElementsByClassName("header-links")[0].style.color = "#551a8b";
+                document.getElementsByClassName("header-links")[1].style.color = "#551a8b";
+                sb.color = "black";
+                sb.backgroundColor = "white";
+                icon_arrow_cross.src = "/static/cross_icon.png"
+                icon_arrow_cross.src = "/static/drop_arrow_icon.png"
+            }
+            else if (n == "2") {
+                b.id = "cont_black";
+                btn.textContent = "Light";
+                btn.style.backgroundColor = "white";
+                btn.style.color = "black";
+                by.className = "black";
+                theme = "black";
+                hr.style.backgroundColor = "black";
+                hr.style.color = "aqua";
+                document.getElementsByClassName("header-links")[0].style.color = "aqua";
+                document.getElementsByClassName("header-links")[1].style.color = "aqua";
+                sb.color = "white";
+                sb.backgroundColor = "black";
+                icon_arrow_cross.src = "/static/cross_icon_w.png"
+                icon_arrow_cross.src = "/static/drop_arrow_icon_w.png"
+            }
+        }
+        function theme_change() {
+    
+            if (sessionStorage.getItem("theme") == "dark") {
+                sessionStorage.setItem("theme", "light")
+                change_theme_combine("1")
+    
+            }
+            else if (sessionStorage.getItem("theme") == "light") {
+                sessionStorage.setItem("theme", "dark")
+                change_theme_combine("2")
+            }
+    
+        }
+    
+        (function () {
+            if (sessionStorage.getItem("theme") == null) {
+                let darTheme = window.matchMedia("(prefers-color-scheme:dark)");
+                if (darTheme.matches) {
+                    sessionStorage.setItem("theme", "dark")
+                    change_theme_combine("2")
+                }
+                else {
+                    sessionStorage.setItem("theme", "light")
+                    change_theme_combine("1")
+                }
+    
+            }
+            else {
+                if (sessionStorage.getItem("theme") == "light") {
+                    change_theme_combine("1")
+                }
+                else if (sessionStorage.getItem("theme") == "dark") {
+                    change_theme_combine("2")
+    
+    
+                }
+            }
+    
+        })()
+    
+    </script>
+</body>
+
+</html>

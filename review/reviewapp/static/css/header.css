@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: sticky;
+    height: 70px;
+    background-color: #80ffd4;
+    top: 0px;
+    z-index: 1;
+  
+
+}
+
+#logo-img {
+    width: 170px;
+
+}
+
+#search-div {
+    display: flex;
+    align-items: center;
+    width: 30%;
+}
+
+#search-box {
+    border-radius: 4px;
+    width: 100%;
+    height: 38px;
+   
+
+}
+
+#search-logo {
+    width: 40px;
+    height: 32px;
+    position: relative;
+    right: 43px;
+    cursor: pointer;
+
+
+}
+
+#profile-icon {
+    height: 57px;
+    margin-right: 5px;
+}
+
+#profile {
+    display: flex;
+    align-items: center;
+    font-family: cursive;
+    text-align: center;
+    font-size: 18px;
+}
+
+.header-links {
+    font-size: 25px;
+    text-decoration: none;
+    font-family: cursive;
+   
+
+}
+
+#drop-icon {
+    height: 25px;
+max-width: 45px;
+
+}
+
+@media screen and (max-width: 1024px) {
+
+    #logo-img {
+        width: 140px;
+
+    }
+
+    .header-links {
+        display: none;
+
+    }
+
+    #drop-icon {
+        display: unset;
+
+
+    }
+
+    #search-div {
+        width: 34%;
+    }
+
+
+}
+
+@media screen and (max-width: 768px) {
+    #username {
+        display: none;
+    }
+
+    #logo-img {
+        display: none;
+
+    }
+
+    #search-div {
+        width: 90%;
+        margin-left: 20px;
+    }
+
+
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/static/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <title>Complain</title>
+    <style>
+        
+        body {
+            background-image: url("/static/home_back.webp");
+            background-attachment: fixed;
+            cursor: url('/static/new_cursor.png') 5 4, auto;
+
+
+
+        }
+        #hidden_d {
+            display: none;
+        }
+
+        .cus_btn {
+            width: 100px;
+            height: 34px;
+            font-size: 25px;
+            background-color: rgb(29, 230, 211);
+            border-radius: 9px;
+            text-decoration: none;
+            color: black;
+            text-align: center;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+
+        }
+
+        #btn_div {
+            margin: auto;
+            width: max-content;
+        }
+
+        form {
+            background-color: aliceblue;
+            border: 25px solid rgb(29, 230, 211);
+            padding: 20px;
+            border-radius: 37px;
+            margin: auto;
+            margin-top: 25px;
+            font-size: 25px;
+            font-family: cursive;
+            box-shadow: 0px 0px 20px;
+            width: max-content;
+
+        }
+
+        input {
+            font-size: 20px;
+
+
+        }
+
+        #form_input {
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 240px 400px;
+            justify-content: center;
+            row-gap: 10px;
+        }
+
+        textarea {
+            font-size: 17px;
+            resize: none;
+        }
+
+        #complain_head {
+            margin: auto;
+            width: max-content;
+            margin-bottom: 10px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #1de6d3;
+
+        }
+        #complains{
+            /* background-color: antiquewhite; */
+            margin-bottom: 30px;
+            
+        }
+        .complaint_element{
+            border: 10px red solid;
+            padding: 5px;
+            width: 1000px;
+            margin: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            padding: 5px;
+            background-color: cornsilk;
+            box-sizing: border-box;
+            font-size: 18px;
+            font-family: cursive;
+        }
+        .c_details{
+            display: flex;
+   
+            justify-content: space-between;
+        }
+        .c_desc{
+            margin-top: 10px;
+
+            border-top: 2px solid rgb(139, 133, 133);
+            padding: 7px;
+
+        }
+        .c_head_name{
+            font-size: 20px;
+            font-weight: bold;
+            font-family: cursive;
+
+        }
+
+    </style>
+</head>
+<header ondragstart="return false">
+    <a href="/"><img id="logo-img" src="/static/logox.png" alt="logo-icon"></a>
+    <div id="search-div">
+        <input id="search-box" autocomplete="off" type="text">
+        <img id="search-logo" src="/static/search_icon.png" alt="search_icon">
+    </div> <!--hidden for students-->
+    <a class="header-links" href="/">Home</a>
+    <a class="header-links" href="/xlogout">Logout</a>
+    <div id="profile">
+        <img id="profile-icon" src="/static/profile_icon.webp" alt="profile">
+        <div id="username">{{ data.name }}</div>
+        <img id="drop-icon" src="/static/drop_arrow_icon.png" alt="drop_icon">
+    </div>
+
+</header>
+<body>
+    <form action="/save_complaint/" method="post">
+        <div id="complain_head">Complain Form</div>
+        {% csrf_token %}
+        <div id="form_input">
+            Against: <input name="against_c" type="email" maxlength="30" placeholder="example@gmail.com" required>
+            Recipient: <input name="to_email" type="email" maxlength="30" placeholder="example@gmail.com" required>
+            Subject: <textarea name="subject_c" required maxlength="200" id="" cols="30" rows="6"></textarea>
+            <input name="date_c" id="hidden_d" required type="text">
+            Describe: <textarea name="text_c" required maxlength="500" id="" cols="30" rows="10"></textarea>
+        </div>
+
+        <div id="btn_div"><input class="cus_btn" type="submit" value="Submit">
+            <a class="cus_btn" href="/">Cancel</a>
+        </div>
+    </form>
+    <div id="complains">
+        {% for x in complains %}
+    <div class="complaint_element">
+        <div class="c_details"><span><span class="c_head_name">To:</span> <span class="to_mail">{{ x.to_email }}</span></span> <span>{{ x.date_c }}</span> <span><span class="c_head_name">Against:</span> {{ x.against_c }}</span></div>
+        <div class="c_desc"><span class="c_head_name">Subject:</span> {{ x.subject_c }}</div> <div class="c_desc"><span class="c_head_name">Description:</span> {{ x.text_c }}</div>
+    </div>
+    {% endfor %}
+    </div>
+
+</body>
+<script>
+    let week_days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    let month_arr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    let cur_date = new Date();
+    let day_name = week_days[cur_date.getDay()];
+    document.getElementById("hidden_d").value = day_name + ", " + cur_date.getDate() + " " + month_arr[cur_date.getMonth()] + " " + cur_date.getFullYear();
+
+    let al_to_mail = document.getElementsByClassName("to_mail")
+    for(let i = 0;i<al_to_mail.length;i++){
+        if(al_to_mail[i].textContent == '{{ data.email }}'){
+            al_to_mail[i].parentElement.parentElement.parentElement.style.borderColor = "#2fcc21";
+        }
+    }
+</script>
+<script src="/static/js/header.js"></script>
+</html>

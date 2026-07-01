@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <title>Document</title>
+    <style>
+        #theme-btn {
+            border: 2px solid rgb(255, 255, 255);
+            background-color: black;
+            color: white;
+            padding: 3px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: fixed;
+            top: 75px;
+            right: 5px;
+        }
+
+        .white {
+            background-image: url("/static/home_back.webp");
+            background-attachment: fixed;
+            cursor: url('/static/new_cursor.png') 5 4, auto;
+
+        }
+
+        .black {
+            background-image: url("/static/home_back.png");
+            background-attachment: fixed;
+            cursor: url('/static/new_cursor_black.png') 5 4, auto;
+
+
+        }
+
+        #main_outer_div {
+            margin-bottom: 20px;
+        }
+
+        .calendar_elements {
+            background-color: #ffcd8a;
+            font-family: cursive;
+            font-size: 22px;
+            display: flex;
+            justify-content: space-between;
+            width: 80vw;
+            margin: auto;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            box-sizing: border-box;
+
+        }
+
+        .ced {
+            display: flex;
+            width: 80%;
+            justify-content: space-between;
+            padding: 4px;
+            border-radius: 4px;
+
+        }
+
+        #calendar_upload {
+            width: max-content;
+            margin: auto;
+            margin-top: 27px;
+            cursor: pointer;
+            font-family: cursive;
+            font-size: 30px;
+            color: white;
+            background-color: rgb(151, 0, 255);
+            border-radius: 10px;
+            padding: 10px;
+
+
+        }
+
+        #submit-btn {
+            padding: 4px;
+        }
+    </style>
+</head>
+<header ondragstart="return false">
+    <a href="/"><img id="logo-img" src="/static/logox.png" alt="logo-icon"></a>
+    <div id="search-div">
+        <input id="search-box" autocomplete="off" type="text">
+        <img id="search-logo" src="/static/search_icon.png" alt="search_icon">
+    </div> <!--hidden for students-->
+    <a class="header-links" href="/">Home</a>
+    <a class="header-links" href="/xlogout">Logout</a>
+    <div id="profile">
+        <img id="profile-icon" src="/static/profile_icon.webp" alt="profile">
+        <div id="username">{{ data.name }}</div>
+        <img id="drop-icon" src="/static/drop_arrow_icon.png" alt="drop_icon">
+    </div>
+
+</header>
+
+<body>
+    <button onclick="theme_change()" id="theme-btn">Dark</button>
+
+    <div id="calendar_upload" onclick="upload_click()">Add Events</div>
+
+    <div id="main_outer_div">
+
+    </div>
+    <script src="/static/js/header.js"></script>
+    <script>
+        function assign() {
+            let date_arr = []
+            let other_data = []
+            let c = 0;
+            let temp;
+            "{% for x in calendar_x %}"
+            temp = "{{ x.date_e }}".split("-");
+
+            date_arr.push([c, new Date(+temp[2], temp[1] - 1, +temp[0])])
+            c++;
+            other_data.push("{{ x.desc_e }}" + "," + "{{ x.type_c }}" + "," + "{{ x.for_c }}")
+            "{% endfor %}"
+            date_arr.sort(function (a, b) {
+                return a[1] - b[1]
+            })
+            let main_d = "";
+            let tempz;
+
+            for (let i = 0; i < other_data.length; i++) {
+
+                tempz = other_data[date_arr[i][0]].split(",")
+                if (tempz[1] == "academic") {
+                    main_d = main_d + `<div class="calendar_elements"><span>${date_arr[i][1].toDateString()}</span><div class="calendar_elements_data ced"><span>${tempz[0]}</span><span>${tempz[2]}</span></div></div>`
+                }
+                else if (tempz[1] == "holiday") {
+                    main_d = main_d + `<div class="calendar_elements"><span>${date_arr[i][1].toDateString()}</span><div class="calendar_elements_data_h ced"><span>${tempz[0]}</span><span>${tempz[2]}</span></div></div>`
+                }
+                else if (tempz[1] == "event") {
+                    main_d = main_d + `<div class="calendar_elements"><span>${date_arr[i][1].toDateString()}</span><div class="calendar_elements_data_e ced"><span>${tempz[0]}</span><span>${tempz[2]}</span></div></div>`
+                }
+
+            }
+            document.getElementById("main_outer_div").innerHTML = main_d;
+        }
+        assign()
+        function upload_click() {
+            window.location.href = `/media/excel_templates/Calendar.xlsx`
+            let du = document.getElementById("calendar_upload")
+            du.innerHTML = `<form action="/calendar_c/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input name="calendar_excel" autocomplete="off" type="file" autocomplete="off" accept=".xlsx" required>
+        <input id="submit-btn" type="submit" value="Submit">
+        </form>`
+            du.removeAttribute("onclick")
+        }
+        function change_theme_combine(n) {
+            let btn = document.getElementById("theme-btn");
+            let by = document.getElementsByTagName("body")[0];
+            let hr = document.getElementsByTagName("header")[0];
+            let sb = document.getElementById("search-box").style;
+            let de = document.getElementsByClassName("calendar_elements")
+            if (n == "1") {
+                for (let i = 0; i < de.length; i++) {
+                    de[i].style.boxShadow = "0px 0px 10px black";
+
+                    de[i].style.backgroundColor = "#ffcd8a"
+                    de[i].style.color = "black"
+                    let temp = de[i].lastElementChild;
+                    if (temp.className == "calendar_elements_data ced") {
+                        temp.style.backgroundColor = "antiquewhite"
+                    }
+                    else if (temp.className == "calendar_elements_data_h ced") {
+                        temp.style.backgroundColor = "rgb(138, 234, 131)"
+                    }
+                    else if (temp.className == "calendar_elements_data_e ced") {
+                        temp.style.backgroundColor = "rgb(132, 233, 238)"
+                    }
+                }
+                btn.textContent = "Dark";
+                btn.style.backgroundColor = "black";
+                btn.style.color = "white";
+                by.className = "white"
+                theme = "white";
+
+                hr.style.backgroundColor = "#80ffd4";
+                hr.style.color = "black";
+                document.getElementsByClassName("header-links")[0].style.color = "#551a8b";
+                document.getElementsByClassName("header-links")[1].style.color = "#551a8b";
+                sb.color = "black";
+                sb.backgroundColor = "white";
+                icon_arrow_cross.src = "/static/cross_icon.png"
+                icon_arrow_cross.src = "/static/drop_arrow_icon.png"
+            }
+            else if (n == 2) {
+                for (let i = 0; i < de.length; i++) {
+                    de[i].style.boxShadow = "0px 0px 10px white";
+
+                    de[i].style.backgroundColor = "rgb(34, 33, 31)"
+                    de[i].style.color = "white"
+                    let temp = de[i].lastElementChild;
+                    if (temp.className == "calendar_elements_data ced") {
+                        temp.style.backgroundColor = "slategray"
+                    }
+                    else if (temp.className == "calendar_elements_data_h ced") {
+                        temp.style.backgroundColor = "rgb(14, 142, 5)"
+                    }
+                    else if (temp.className == "calendar_elements_data_e ced") {
+                        temp.style.backgroundColor = "rgb(0, 85, 89)"
+                    }
+                }
+
+                btn.textContent = "Light";
+                btn.style.backgroundColor = "white";
+                btn.style.color = "black";
+                by.className = "black";
+                theme = "black";
+
+                hr.style.backgroundColor = "black";
+                hr.style.color = "aqua";
+                document.getElementsByClassName("header-links")[0].style.color = "aqua";
+                document.getElementsByClassName("header-links")[1].style.color = "aqua";
+                sb.color = "white";
+                sb.backgroundColor = "black";
+                icon_arrow_cross.src = "/static/cross_icon_w.png"
+                icon_arrow_cross.src = "/static/drop_arrow_icon_w.png"
+            }
+        }
+        function theme_change() {
+
+            if (sessionStorage.getItem("theme") == "dark") {
+                sessionStorage.setItem("theme", "light")
+                change_theme_combine("1")
+            }
+            else if (sessionStorage.getItem("theme") == "light") {
+                sessionStorage.setItem("theme", "dark")
+                change_theme_combine("2")
+
+
+            }
+
+        }
+
+        (function () {
+            if (sessionStorage.getItem("theme") == null) {
+                let darTheme = window.matchMedia("(prefers-color-scheme:dark)");
+                if (darTheme.matches) {
+                    sessionStorage.setItem("theme", "dark")
+                    change_theme_combine("2")
+
+                }
+                else {
+                    sessionStorage.setItem("theme", "light")
+                    change_theme_combine("1")
+
+                }
+
+            }
+            else {
+                if (sessionStorage.getItem("theme") == "light") {
+                    change_theme_combine("1")
+
+
+                }
+                else if (sessionStorage.getItem("theme") == "dark") {
+                    change_theme_combine("2")
+
+
+                }
+            }
+
+        })()
+    </script>
+</body>
+
+</html>

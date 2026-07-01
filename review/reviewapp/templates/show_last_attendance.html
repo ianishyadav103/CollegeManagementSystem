@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <title>Document</title>
+</head>
+<style>
+    
+    .p {
+        background-color: rgb(67, 190, 67);
+        padding: 1px 3px 1px 3px;
+        border-radius: 10px;
+    }
+
+    .a {
+        background-color: rgb(190, 67, 67);
+    }
+
+    #subject-details {
+        background-color: rgb(8, 204, 236);
+        font-size: 30px;
+        font-family: cursive;
+        width: max-content;
+        text-align: center;
+        margin: auto;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        padding: 12px;
+        margin-top: 20px;
+
+    }
+
+    .stud_att_last_list {
+        background-color: bisque;
+        margin-top: 20px;
+        font-size: 25px;
+        font-family: cursive;
+        margin: auto;
+        margin-top: 10px;
+        max-width: 800px;
+        border-radius: 15px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .cross_img {
+        height: 30px;
+    }
+
+    #my_form {
+        display: none;
+    }
+</style>
+<header ondragstart="return false">
+    <a href="/"><img id="logo-img" src="/static/logox.png" alt="logo-icon"></a>
+    <div id="search-div">
+        <input id="search-box" autocomplete="off" type="text">
+        <img id="search-logo" src="/static/search_icon.png" alt="search_icon">
+    </div> <!--hidden for students-->
+    <a class="header-links" href="/">Home</a>
+    <a class="header-links" href="/xlogout">Logout</a>
+    <div id="profile">
+        <img id="profile-icon" src="/static/profile_icon.webp" alt="profile">
+        <div id="username">{{ data.name }}</div>
+        <img id="drop-icon" src="/static/drop_arrow_icon.png" alt="drop_icon">
+    </div>
+
+</header>
+<body>
+
+    <div id="subject-details">
+        <div>{{ sub.sem_course }}</div>
+        <div>{{ sub.sub_name }}</div>
+        <div>Div/Group: {{ sub.div_group }}</div>
+        <div>Modified by: {{ sub.last_modified_by }}
+        </div>
+        <div>Modified On: {{ sub.last_modified }}
+        </div>
+    </div>
+    {% for x in last_att_data %}
+    <div class="stud_att_last_list">
+        <span>{{ x.stud_reference.prn }}</span>
+        <span>{{ x.stud_reference.name }}</span>
+        <span class="p">PRESENT</span>
+    </div>
+    {% endfor %}
+    {% for x in absent_x %}
+    <div class="stud_att_last_list">
+        <span>{{ x.prn }}</span>
+        <span>{{ x.name }}</span>
+        <span class="p a">ABSENT</span>
+    </div>
+    {% endfor %}
+    <form id="my_form" action="/home/faculty/attendance/modify/" method="post">
+        {% csrf_token %}
+        <input id="prn_f" name="prn_z" type="text">
+        <input name="marked_on" value="{{ sub.last_modified }}" type="text">
+        <input id="att_val" name="attendance_val" type="text">
+        <input name="sub_id" value="{{ sub.id }}" type="text">
+    </form>
+
+</body><script src="/static/js/header.js"></script>
+<script>
+    let sall
+    function open_form() {
+        document.getElementById("prn_f").value = event.currentTarget.parentElement.parentElement.firstElementChild.textContent;
+        document.getElementById("att_val").value = event.currentTarget.parentElement.textContent;
+
+        temp = document.getElementsByClassName("cross_img")
+        for (let i = 0; i < temp.length; i++) {
+            temp[i].src = "/static/edit-icon.png"
+            temp[i].setAttribute("onclick", "open_form()")
+
+
+
+
+        } event.currentTarget.setAttribute("src", "/static/delete-icon.png")
+        event.currentTarget.setAttribute("onclick", "send()")
+
+    } onclick
+    function modify_access() {
+        if ("{{ data.qualifications }}" != "") {
+            sall = document.getElementsByClassName("stud_att_last_list")
+            for (let i = 0; i < sall.length; i++) {
+                sall[i].lastElementChild.insertAdjacentHTML('beforeend', `<img class="cross_img" onclick="open_form()" src="/static/edit-icon.png" alt="cross">`)
+            }
+        }
+
+    }
+    modify_access()
+    function send(){
+            let temp = document.getElementById("my_form")
+            temp.submit()
+        }
+</script>
+
+</html>

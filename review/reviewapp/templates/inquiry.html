@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/static/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <title>Document</title>
+</head>
+<style>
+    :root {
+        /* --mian_colour: #08a571; */
+        --mian_colour: #212121;
+    }
+
+    .chat_logo {
+        height: 45px;
+    }
+
+    .search_box_icons {
+        height: 35px;
+    }
+
+    #cont_search_input {
+        height: 35px;
+        width: 466px;
+        border: none;
+        font-size: 20px;
+
+    }
+
+
+    #app_name {
+        font-size: 45px;
+        color: blue;
+    }
+
+    body {
+        background-color: #bbb;
+    }
+
+    #outer_box {
+        margin: 10px;
+        background-color: var(--mian_colour);
+        display: flex;
+        border-radius: 14px;
+        justify-content: space-evenly;
+        height: calc(100vh - 90px);
+        box-sizing: border-box;
+
+    }
+
+    #chat_box {
+        height: 100%;
+        /* width: max-content; */
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    #left-cont-cont {
+        height: 100%;
+        width: 35vw;
+        min-width: 400px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message-img {
+        height: 22px;
+        float: right;
+    }
+
+    #left_top_head,
+    #contacts_search_div {
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 12px solid var(--mian_colour);
+        padding: 7px;
+        border-radius: 11px;
+        border-radius: 24px;
+    }
+
+    #left_bottom_contacts {
+        border: 12px solid var(--mian_colour);
+        height: 59vh;
+        font-size: 25px;
+        font-family: cursive;
+        overflow-y: scroll;
+        padding: 7px;
+        border-radius: 24px;
+    }
+
+    .contacts_i {
+        height: 35px;
+        border-bottom: 2px solid black;
+        background-color: aquamarine;
+        border-radius: 14px;
+        overflow-x: hidden;
+        padding: 7px;
+        cursor: pointer;
+    }
+
+    .contacts_i:hover {
+        background-color: #87ff74;
+    }
+
+
+    #message_box {
+        background-image: url("/static/chat/background.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 12px solid var(--mian_colour);
+        border-radius: 20px;
+        padding: 7px;
+        height: 80%;
+
+    }
+
+    #messages {
+        display: flex;
+        height: 88%;
+        overflow: scroll;
+        flex-direction: column;
+
+    }
+
+    .text_span {
+        color: rgb(0, 0, 0);
+        margin: 10px;
+        padding: 2px 7px 1px 7px;
+        border-radius: 10px;
+    }
+
+    .me {
+        align-self: flex-end;
+        background-color: #87ff74;
+        min-width: 50px;
+    }
+
+    .you {
+        background-color: white;
+        align-self: flex-start;
+    }
+
+    .time_i {
+        float: right;
+    }
+
+    .from_you {
+        color: orange;
+        font-weight: bold;
+    }
+
+    .message {
+        font-family: cursive;
+        /* overflow-wrap: break-word; */
+
+    }
+
+    #send_box {
+        background-color: #5271c6;
+        border-radius: 10px;
+        border: 12px solid var(--mian_colour);
+        overflow: scroll;
+        text-overflow: ellipsis;
+        padding: 7px;
+        display: flex;
+        min-height: 30px;
+
+
+
+    }
+
+    #send_icon {
+        width: 7%;
+        min-width: 40px;
+        cursor: pointer;
+    }
+
+    #messagge_input {
+        font-size: 25px;
+        width: 93%;
+        min-width: 250px;
+    }
+
+    #name_box {
+        border: 12px solid var(--mian_colour);
+        background-color: var(--mian_colour);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        /* overflow: hidden; */
+        /* height: 25px; */
+        min-height: max-content;
+        color: white;
+        font-size: 20px;
+        font-family: cursive;
+
+    }
+
+    #minimize {
+        height: 35px;
+    }
+
+    #maximize {
+        /* background-color: #5271c6; */
+        height: 35px;
+        display: none;
+        rotate: 180deg;
+    }
+
+    #minimize_m {
+        height: 35px;
+        display: none;
+    }
+
+    #maximize_m {
+        /* background-color: #5271c6; */
+        height: 35px;
+        display: none;
+        rotate: 180deg;
+    }
+
+    @media screen and (max-width: 768px) {
+        #chat_box {
+            display: none;
+        }
+
+        #minimize,
+        #maximize {
+            display: none;
+
+        }
+
+        #minimize_m,
+        #maximize_m {
+            display: unset;
+
+        }
+
+        #left-cont-cont {
+            min-width: unset;
+            width: 92vw;
+        }
+
+        #outer_box {
+            height: calc(100vh -80px)
+        }
+
+
+
+    }
+</style>
+<header ondragstart="return false">
+    <a href="/"><img id="logo-img" src="/static/logox.png" alt="logo-icon"></a>
+    <div id="search-div">
+        <input id="search-box" autocomplete="off" type="text">
+        <img id="search-logo" src="/static/search_icon.png" alt="search_icon">
+    </div> <!--hidden for students-->
+    <a class="header-links" href="/">Home</a>
+    <a class="header-links" href="/xlogout">Logout</a>
+    <div id="profile">
+        <img id="profile-icon" src="/static/profile_icon.webp" alt="profile">
+        <div id="username">{{ data.name }}</div>
+        <img id="drop-icon" src="/static/drop_arrow_icon.png" alt="drop_icon">
+    </div>
+
+</header>
+<body>
+    <div id="outer_box">
+
+        <div id="left-cont-cont">
+            <div id="left_top_head">
+                <div>
+                    <img class="chat_logo" src="\static\chat\logo_chat.png" alt="">
+                    <span id="app_name">ChatApp</span>
+                </div>
+                <img class="chat_logo" src="\static\chat\setting_icon.png" alt="">
+
+            </div>
+            <div id="contacts_search_div">
+                <img id="minimize" onclick="hide_bar()" src="/static/chat/OIP.png" alt="minimize">
+                <img id="minimize_m" onclick="hide_bar_m()" src="/static/chat/OIP.png" alt="minimize_m">
+                <input id="cont_search_input" type="text"><img class="search_box_icons" src="/static/search_icon.png"
+                    alt="search_icon">
+
+            </div>
+            <div id="left_bottom_contacts">
+                {% for x in course_contact %}
+                <div onclick="get_contact_data('{{ x.2 }}'+'{{ x.0 }}')" class="contacts_i"> {{ x.0 }} {{ x.1 }}</div>
+                {% endfor %}
+                {% for x in subject_contact %}
+                <div onclick="get_contact_data('{{ x.1 }}' + '{{ x.0 }}' )" class="contacts_i"> {{ x.0 }} {{ x.2 }}</div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <div id="chat_box">
+
+
+            <div id="message_box">
+                <div id="name_box">
+                    <img id="maximize_m" onclick="show_bar_m()" src="/static/chat/OIP.png" alt="maximize_m">
+                    <img id="maximize" onclick="show_bar()" src="/static/chat/OIP.png" alt="maximize">
+                    <span id="name_box_span">Welcome {{ data.name }}</span>
+                </div>
+                <div id="messages"></div>
+            </div>
+            <div id="send_box">
+                <input id="messagge_input" type="text" placeholder="  Type a message"><img id="send_icon"
+                    src="/static/chat/send_icon.png" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function hide_bar() {
+        document.getElementById("left-cont-cont").style.display = "none";
+        document.getElementById("maximize").style.display = "unset";
+
+
+
+    }
+    function hide_bar_m() {
+        document.getElementById("left-cont-cont").style.display = "none";
+        document.getElementById("chat_box").style.display = "flex";
+
+
+
+    }
+    function show_bar() {
+        document.getElementById("left-cont-cont").style.display = "flex";
+        document.getElementById("maximize").style.display = "none";
+
+    }
+    function show_bar_m() {
+        document.getElementById("left-cont-cont").style.display = "flex";
+        document.getElementById("chat_box").style.display = "none";
+
+    }
+    let groupid;
+    let nb = document.getElementById("name_box_span")
+    let special_contact_Arr = [];
+    let recent_messages_elements = [];
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+
+        return cookieValue;
+    }
+    let temp_i = document.getElementById("messagge_input");
+    let mg = document.getElementById("messages");
+    let chatSocket;
+    function send_contact_data() {
+        let text = temp_i.value;
+        temp_i.value = "";
+        if (text.trim() != "") {
+
+            let cur_time = new Date()
+
+            let h = cur_time.getHours().toString()
+            let m = cur_time.getMinutes().toString()
+            if (h.length == 1) {
+                h = "0" + h
+            }
+            if (m.length == 1) {
+                m = "0" + m
+            }
+            time = h + ":" + m
+            let d = cur_time.getDate().toString()
+            let g = (cur_time.getMonth() + 1).toString()
+            if (d.length == 1) {
+                d = "0" + d
+            }
+            if (g.length == 1) {
+                g = "0" + g
+            }
+            date = d + "/" + g + "/" + cur_time.getFullYear()
+            mg.insertAdjacentHTML('beforeend', `<div class="text_span me"><div class="message">${text}</div><span class="time_i">${time}</span><img class="message-img" src="/static/chat/wait.png" alt="wait"></div>`)
+            recent_messages_elements.push(mg.lastElementChild)
+            mg.scrollTo(0, mg.scrollHeight)
+
+
+
+            fetch('/set_inquiry/', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest', //anything to do here for islating users
+                    'X-CSRFToken': csrftoken,
+
+                },
+                //email:)text:)time:)date:)groupid
+                body: JSON.stringify({ 'post_data': '{{ data.email }}' + ':)' + text + ':)' + time + ':)' + date + ':)' + groupid })
+            })
+                .then(response => {
+                    return response.json()
+                })
+                .then(returned => {
+                    chatSocket.send(JSON.stringify({
+                        'message': text,
+                        'time': time
+                    }));
+
+                })
+
+
+        }
+
+
+    }
+
+    const csrftoken = getCookie('csrftoken');
+    function get_contact_data(name) {
+
+        try {
+            chatSocket.close()
+        }
+
+        catch {
+
+        }
+        temp_i.value = "";
+        let temp = event.currentTarget.textContent.trim();
+        groupid = (name.replace(/[^a-zA-Z0-9]/g, ""));
+        // 
+        fetch('/get_inquiry/', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest', //anything to do here for islating users
+                'X-CSRFToken': csrftoken,
+
+            },
+            body: JSON.stringify({ 'post_data': groupid })
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then(data_returned => {
+                mg.innerHTML = "";
+                let data_Arr = data_returned['my_data']
+                if (data_Arr.length > 0) {
+                    myhtml = "";
+                    for (let i = 0; i < data_Arr.length; i++) {
+                        if (data_Arr[i]["email_from"] == "{{ data.email }}") {
+                            myhtml = myhtml + `<div class="text_span me"><div class="message">${data_Arr[i]["text_i"]}</div><span class="time_i">${data_Arr[i]["time_i"]}</span><img class="message-img" src="/static/chat/sent.png" alt="sent"></div>`
+
+                        }
+                        else {
+                            myhtml = myhtml + `<div class="text_span you"><div class="from_you">~${data_Arr[i]["email_from"]}</div><div class="message">${data_Arr[i]["text_i"]}</div><span class="time_i">${data_Arr[i]["time_i"]}</span></div>`
+                        }
+
+                    }
+
+                    mg.innerHTML = myhtml;
+                }
+                nb.textContent = temp;
+                document.getElementById("send_icon").setAttribute("onclick", `send_contact_data()`)
+                document.getElementById("messagge_input").addEventListener("keyup", function (event) {
+
+                    if (event.keyCode == 13) {
+                        send_contact_data()
+                    }
+                })
+
+                mg.scrollTo(0, mg.scrollHeight)
+
+            })
+
+        if (special_contact_Arr.length > 0) {
+            special_contact_Arr[0].setAttribute('onclick', `get_contact_data(` + "\"" + (special_contact_Arr[1].toString()) + "\"" + `)`)
+            special_contact_Arr[0].style.backgroundColor = 'aquamarine';
+
+            special_contact_Arr = [];
+        }
+        event.currentTarget.setAttribute("onclick", "");
+        event.currentTarget.style.backgroundColor = 'rgb(251, 255, 116)';
+        special_contact_Arr.push(event.currentTarget)
+        special_contact_Arr.push(name)
+
+        chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + "inq" + (name.replace(/[^a-zA-Z0-9]/g,""))
+            + '/'
+        );
+
+        chatSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            if (data.username != '{{ data.email }}') {
+                mg.insertAdjacentHTML('beforeend', `<div class="text_span you"><div class="from_you">~${data.username}</div><div class="message">${data.message}</div><span class="time_i">${data.time}</span></div>`)
+                mg.scrollTo(0, mg.scrollHeight)
+
+
+
+            }
+            else {
+                recent_messages_elements[0].lastElementChild.src = '/static/chat/sent.png';
+                recent_messages_elements[0].lastElementChild.alt = 'sent';
+                recent_messages_elements.splice(0, 1)
+
+            }
+        };
+
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+    }
+
+
+
+
+</script>
+<script src="/static/js/header.js"></script>
+</html>
