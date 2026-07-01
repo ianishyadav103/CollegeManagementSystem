@@ -18,10 +18,9 @@ A **BCA Major Project** built using **Django**, **Python**, **OpenCV**, and **Do
 
 * Python
 * Django
-* OpenCV
+* OpenCV - facial-recognition
 * Django Channels
 * Redis
-* SQLite
 * Docker & Docker Compose
 
 ---
